@@ -1,0 +1,36 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "codejam virtual keyboard",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack --watch",
+    "dev": "webpack --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ligalaiz/virtual-keyboard.git"
+  },
+  "keywords": [
+    "codejam",
+    "virtual",
+    "keyboard"
+  ],
+  "author": "Ligalaiz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ligalaiz/virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/Ligalaiz/virtual-keyboard#readme",
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "eslint": "^6.8.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.3.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
