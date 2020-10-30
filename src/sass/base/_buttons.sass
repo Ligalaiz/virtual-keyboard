@@ -12,7 +12,7 @@
     width: 765px
     height: 100px
     border: 1px solid $color-grey
-    focus:
+    outline: none
   &__list
     display: flex
     justify-content: space-between
@@ -45,14 +45,6 @@
       left: 0
       border-radius: 5px
       z-index: -1
-      // transition: all 0.2s linear
-
-  &__message
-    font-size: 20px
-    color: $color-black
-    &:first-letter
-      color: $color-yellow--attention
-      font-size: 30px
 
 [data='8']
   width: 112px
@@ -73,6 +65,13 @@
 
 .active
   box-shadow: none
+  border-color: #4caf50
+  &:before
+    background: #4caf50
+    opacity: 1
+
+.caps--active,
+.shift--active
   border-color: #4caf50
   &:before
     background: #4caf50

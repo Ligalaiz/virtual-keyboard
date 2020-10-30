@@ -56,15 +56,15 @@ export default [
   { sign: ".", signOn: ">", num: 190 },
   { sign: "/", signOn: "?", num: 191 },
   { sign: "⇑", num: 38 },
-  { sign: "Shift", num: 16 },
+  { sign: "Shift", num: 16, right: 'ShiftRight' },
 
   { sign: "Ctrl", num: 17 },
   { sign: "Win", num: 991 },
   { sign: "Alt", num: 18 },
   { sign: "", num: 32 },
-  { sign: "Alt", num: 18 },
+  { sign: "Alt", num: 18, right: 'AltRight'},
   { sign: "⇐", num: 37 },
   { sign: "⇓", num: 40 },
   { sign: "⇒", num: 39 },
-  { sign: "Ctrl", num: 17 }
+  { sign: "Ctrl", num: 17, right: 'ControlRight' }
 ];

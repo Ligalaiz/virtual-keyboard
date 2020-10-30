@@ -1,16 +1,11 @@
-export function tabBtn(e, input) {
-  if (e.keyCode == 9) {
+export function tabBtn(e, myTextarea) {
+  if (e.keyCode == 9 || e.target.getAttribute('data') == 9){
     e.preventDefault();
-    if (input.value.length > 0) {
-      input.value += '  ';
-    }
-  }
-}
-export function tabMouse(e, input) {
-  if (e.target.getAttribute('data') == 9) {
-    e.preventDefault();
-    if (input.value.length > 0) {
-      input.value += ' ';
-    }
+    let startPos = myTextarea.selectionStart,
+    endPos = myTextarea.selectionEnd,
+    startValue = myTextarea.value.substring(0, startPos),
+    endValue = myTextarea.value.substring(endPos, myTextarea.value.length);
+    myTextarea.value = startValue + '  ' + endValue;
+    myTextarea.setSelectionRange(startPos + 2, startPos + 2); 
   }
 }

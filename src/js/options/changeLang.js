@@ -1,31 +1,7 @@
-// export default function changeLang(keyboard, lang, languages, initKeys,...codes) {
-  let pressed = new Set();
-
-//   document.addEventListener('keydown', function (event) {
-//     pressed.add(event.code);
-//     for (let code of codes) {
-//       if (!pressed.has(code)) {
-//         return;
-//       }
-//     }
-//     keyboard.querySelectorAll('.keyboard__item').forEach((el) => {
-//       el.remove();
-//     });
-
-//     localStorage.getItem('lang') == 'en'
-      ///////? localStorage.setItem('lang', 'ru')
-//       : localStorage.setItem('lang', 'en');
-//     lang = languages[localStorage.getItem('lang')];
-//     initKeys(lang);
-//     pressed.clear();
-//   });
-//   document.addEventListener('keyup', function (event) {
-//     pressed.delete(event.code);
-//   });
-// }
-
-export function changeLang(keyboard, lang, languages, initKeys,...codes) {
-  pressed.add(event.code);
+let pressed = new Set();
+export function changeLang(e, keyboard, languages, initKeys, ...codes) {
+  let lang = languages[localStorage.getItem('lang')];
+  pressed.add(e.code);
   for (let code of codes) {
     if (!pressed.has(code)) {
       return;
@@ -43,6 +19,6 @@ export function changeLang(keyboard, lang, languages, initKeys,...codes) {
   pressed.clear();
 }
 
-export function clearCache () {
-  pressed.delete(event.code);
+export function clearCache(e) {
+  pressed.delete(e.code);
 }

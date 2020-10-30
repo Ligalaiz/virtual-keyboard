@@ -8,12 +8,11 @@ import {
 import { inputFromMouse } from './options/inputAnimationMouse.js';
 import backspace from './options/backspace.js';
 import space from './options/space.js';
-import { tabBtn, tabMouse } from './options/tab.js';
+import { tabBtn } from './options/tab.js';
 import del from './options/del.js';
 import enter from './options/enter.js';
 import { shiftOn, shiftOff } from './options/shift.js';
-import { capsOn, capsOff } from './options/capsLock.js';
-import { changeLang, clearCache } from './options/changeLang.js';
+// import { changeLang, clearCache } from './options/changeLang.js';
 
 // Create structure
 const keyboard = document.createElement('div'),
@@ -25,76 +24,84 @@ const keyboard = document.createElement('div'),
 keyboardStructure(keyboard, keyboard__wrap, myTextarea, myList, message);
 
 // Add buttons to the DOM structure
-localStorage.getItem('lang') || localStorage.setItem('lang', 'en');
+localStorage.getItem('lang') || localStorage.setItem('lang', 'ru');
 let lang = languages[localStorage.getItem('lang')];
 
 initKeys(lang);
 
-const input = document.querySelector('.keyboard__input');
+let shift = false;
 let caps = false;
 function handler(e) {
-  myTextarea.focus();
+  if (e.keyCode === 18) e.preventDefault();
 
-  const { code, type, key } = e;
+  const { type } = e;
   if (type.match(/keydown/)) {
     // Add animation for key
     addAnimationButtons(e, keyboard);
     // Add Tab option
-    tabBtn(e, input);
+    tabBtn(e, myTextarea);
+
     // Add Shift option
-    shiftOn(e, keyboard, lang);
-    // Add Caps Lock option
+    if (e.keyCode == 16) {
+      shift = shift ? false : true;
+      shift ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+    }
     if (e.keyCode == 20) {
       caps = caps ? false : true;
+      caps ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
     }
-    caps ? capsOn(e, keyboard, lang) : capsOff(e, keyboard, lang);
     // Add change language option
-    changeLang(keyboard, lang, languages, initKeys, 'ShiftLeft', 'AltLeft');
-    changeLang(keyboard, lang, languages, initKeys, 'ShiftRight', 'AltRight');
-  }
-  if (type.match(/keyup/)) {
+    // changeLang(e, keyboard, lang, languages, initKeys, 'ShiftLeft', 'AltLeft');
+    // changeLang(
+    //   e,
+    //   keyboard,
+    //   languages,
+    //   initKeys,
+    //   'ShiftRight',
+    //   'AltRight'
+    // );
+  } else if (type.match(/keyup/)) {
     // Remove from animation from key
     removeAnimationButtons(keyboard);
-    // Remove Shift option
-    shiftOff(e, keyboard, lang);
     // Clear language cache
-    clearCache();
+    // clearCache(e);
   }
+  myTextarea.focus();
 }
 document.addEventListener('keydown', (e) => handler(e));
 document.addEventListener('keyup', (e) => handler(e));
 
 function mouseHandler(e) {
-  myTextarea.focus();
-  const { code, type, key } = e;
+  const { type } = e;
 
   if (type.match(/mousedown/)) {
     // Input from mouse click
-    inputFromMouse(e, keyboard, input);
+    inputFromMouse(e, keyboard, myTextarea);
     // Add Backspace option
-    backspace(e, input);
+    backspace(e, myTextarea);
     // Add Space option
-    space(e, input);
+    space(e, myTextarea);
     // Add Tab option
-    tabMouse(e, input);
+    tabBtn(e, myTextarea);
     // Add Del option
-    del(e, input);
+    del(e, myTextarea);
     // Add Enter option
-    enter(e, input);
+    enter(e, myTextarea);
     // Add Shift option
-    shiftOn(e, keyboard, lang);
-    // Add Caps Lock option
+    if (e.target.getAttribute('data') == 16) {
+      shift = shift ? false : true;
+      shift ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+    }
     if (e.target.getAttribute('data') == 20) {
       caps = caps ? false : true;
+      caps ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
     }
-    caps ? capsOn(e, keyboard, lang) : capsOff(e, keyboard, lang);
   }
   if (type.match(/mouseup/)) {
     // Remove animation for mouse
     removeAnimationButtons(keyboard);
-    // Remove Shift option
-    shiftOff(e, keyboard, lang);
   }
+  myTextarea.focus();
 }
 document.addEventListener('mousedown', (e) => mouseHandler(e));
 document.addEventListener('mouseup', (e) => mouseHandler(e));

@@ -1,14 +1,14 @@
-export default function del(e, input) {
+export default function del(e, myTextarea) {
   if (e.target.getAttribute('data') == 46) {
-    if (input.selectionStart == input.selectionEnd) {
-      input.setRangeText(
+    if (myTextarea.selectionStart == myTextarea.selectionEnd) {
+      myTextarea.setRangeText(
         '',
-        input.selectionStart,
-        input.selectionEnd + 1,
+        myTextarea.selectionStart,
+        myTextarea.selectionEnd + 1,
         'end'
       );
-    } else if (input.selectionStart != input.selectionEnd) {
-      input.setRangeText('', input.selectionStart, input.selectionEnd, 'end');
+    } else if (myTextarea.selectionStart != myTextarea.selectionEnd) {
+      myTextarea.setRangeText('', myTextarea.selectionStart, myTextarea.selectionEnd, 'end');
     }
   }
 }

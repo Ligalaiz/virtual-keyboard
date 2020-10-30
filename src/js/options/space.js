@@ -1,8 +1,10 @@
-export default function space(e, input) {
+export default function space(e, myTextarea) {
   if (e.target.getAttribute('data') == 32) {
-    e.preventDefault();
-    if (input.value.length > 0) {
-      input.value += ' ';
-    }
+    let startPos = myTextarea.selectionStart,
+      endPos = myTextarea.selectionEnd,
+      startValue = myTextarea.value.substring(0, startPos),
+      endValue = myTextarea.value.substring(endPos, myTextarea.value.length);
+    myTextarea.value = startValue + ' ' + endValue;
+    myTextarea.setSelectionRange(startPos + 1, startPos + 1);
   }
 }
