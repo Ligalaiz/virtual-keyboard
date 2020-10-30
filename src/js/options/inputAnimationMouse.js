@@ -18,11 +18,3 @@ export function inputFromMouse(e, keyboard, input) {
     e.target.classList.add('active');
   }
 }
-
-export function removeMouseAnimation(e, keyboard) {
-  if (e.target.classList.contains('keyboard__item')) {
-    keyboard.querySelectorAll('.keyboard__item').forEach((el) => {
-      el.classList.remove('active');
-    });
-  }
-}

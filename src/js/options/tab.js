@@ -10,7 +10,7 @@ export function tabMouse(e, input) {
   if (e.target.getAttribute('data') == 9) {
     e.preventDefault();
     if (input.value.length > 0) {
-      input.value += '  ';
+      input.value += ' ';
     }
   }
 }
