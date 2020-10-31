@@ -1,17 +1,20 @@
 import languages from './language/languages.js';
 import keyboardStructure from './initStructure.js';
 import initKeys from './initKeys.js';
+import inputFromKeyboard from './options/inputFromKeyboard.js';
 import {
   addAnimationButtons,
   removeAnimationButtons,
-} from './options/animationButtons.js';
-import { inputFromMouse } from './options/inputAnimationMouse.js';
+} from './options/addAnimationButtons.js';
+import inputFromMouse from './options/inputFromMouse.js';
+import addAnimationMouse from './options/addAnimationMouse.js';
 import backspace from './options/backspace.js';
 import space from './options/space.js';
 import { tabBtn } from './options/tab.js';
 import del from './options/del.js';
 import enter from './options/enter.js';
 import { shiftOn, shiftOff } from './options/shift.js';
+import { addArrowLeft, addArrowRight } from './options/addArrow.js';
 // import { changeLang, clearCache } from './options/changeLang.js';
 
 // Create structure
@@ -38,6 +41,8 @@ function handler(e) {
   if (type.match(/keydown/)) {
     // Add animation for key
     addAnimationButtons(e, keyboard);
+    // Add Input from keyboard option
+    inputFromKeyboard(e, keyboard, myTextarea);
     // Add Tab option
     tabBtn(e, myTextarea);
 
@@ -77,6 +82,8 @@ function mouseHandler(e) {
   if (type.match(/mousedown/)) {
     // Input from mouse click
     inputFromMouse(e, keyboard, myTextarea);
+    // Add animation for mouse
+    addAnimationMouse(e, keyboard, myTextarea);
     // Add Backspace option
     backspace(e, myTextarea);
     // Add Space option
@@ -95,6 +102,14 @@ function mouseHandler(e) {
     if (e.target.getAttribute('data') == 20) {
       caps = caps ? false : true;
       caps ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+    }
+    // Add arrow left option
+    if (e.target.getAttribute('data') == 37) {
+      addArrowLeft(myTextarea);
+    }
+    // Add arrow rigth option
+    if (e.target.getAttribute('data') == 39) {
+      addArrowRight(myTextarea);
     }
   }
   if (type.match(/mouseup/)) {

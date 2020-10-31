@@ -1,7 +1,7 @@
 export function addAnimationButtons(e, keyboard) {
   if (e.code.match(/ShiftRight|ControlRight|AltRight/)) {
     keyboard
-      .querySelector(`div[data-place="${e.code}"]`)
+      .querySelector(`div[data-code="${e.code}"]`)
       .classList.add('active');
   } else if (!e.code.match(/ShiftRight|ControlRight|AltRight/)) {
     if (keyboard.querySelector(`div[data="${e.keyCode}"]`)) {

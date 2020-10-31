@@ -2,12 +2,22 @@ let isUpCaps = false;
 let isUpShift = false;
 
 export function shiftOn(e, keyboard, lang) {
+  const { code, keyCode } = e;
   e.preventDefault();
+  if (keyCode === 16 || e.target.getAttribute('data') == 16) {
+      if (keyCode) {
+      keyboard
+        .querySelector(`div[data-code="${code}"]`)
+        .classList.add('shift--active');
+    } else {
+      let place = e.target.getAttribute('data-code');
+      keyboard
+        .querySelector(`div[data-code="${place}"]`)
+        .classList.add('shift--active');
+    }
 
-  if (e.keyCode === 16 || e.target.getAttribute('data') == 16) {
-    keyboard.querySelector(`div[data="16"]`).classList.add('shift--active');
     isUpShift = true;
-  } else if (e.keyCode === 20 || e.target.getAttribute('data') == 20) {
+  } else if (keyCode === 20 || e.target.getAttribute('data') == 20) {
     keyboard.querySelector(`div[data="20"]`).classList.add('caps--active');
     isUpCaps = true;
   }
@@ -20,7 +30,7 @@ export function shiftOn(e, keyboard, lang) {
       }
     }
 
-    if (e.keyCode == 16 || e.target.getAttribute('data') == 16) {
+    if (keyCode == 16 || e.target.getAttribute('data') == 16) {
       lang.forEach((key) => {
         if (el.getAttribute('data') == key['num'] && key['signOn']) {
           el.textContent = key['signOn'];
@@ -31,11 +41,22 @@ export function shiftOn(e, keyboard, lang) {
 }
 
 export function shiftOff(e, keyboard, lang) {
+  const { code, keyCode } = e;
   e.preventDefault();
-  if (e.keyCode === 16 || e.target.getAttribute('data') == 16) {
-    keyboard.querySelector(`div[data="16"]`).classList.remove('shift--active');
+  if (keyCode === 16 || e.target.getAttribute('data') == 16) {
+    if (keyCode) {
+      keyboard
+        .querySelector(`div[data-code="${code}"]`)
+        .classList.remove('shift--active');
+    } else {
+      let place = e.target.getAttribute('data-code');
+      keyboard
+        .querySelector(`div[data-code="${place}"]`)
+        .classList.remove('shift--active');
+    }
+
     isUpShift = false;
-  } else if (e.keyCode === 20 || e.target.getAttribute('data') == 20) {
+  } else if (keyCode === 20 || e.target.getAttribute('data') == 20) {
     keyboard.querySelector(`div[data="20"]`).classList.remove('caps--active');
     isUpCaps = false;
   }
