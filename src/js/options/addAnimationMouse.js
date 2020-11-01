@@ -1,3 +1,4 @@
 export default function addAnimationMouse(e) {
-  e.target.classList.add('active');
+  if (!e.target.closest('div[data-code]')) return;
+  e.target.closest('div[data-code]').classList.add('active');
 }

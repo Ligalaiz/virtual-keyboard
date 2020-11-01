@@ -12,8 +12,11 @@ export function addAnimationButtons(e, keyboard) {
   }
 }
 
-export function removeAnimationButtons(keyboard) {
+export function removeAnimationButtons(keyboard, optionBtn) {
   keyboard.querySelectorAll('.keyboard__item').forEach((el) => {
+    el.classList.remove('active');
+  });
+  optionBtn.querySelectorAll('.option-btn__item').forEach((el) => {
     el.classList.remove('active');
   });
 }

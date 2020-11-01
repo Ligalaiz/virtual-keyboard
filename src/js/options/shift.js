@@ -1,11 +1,11 @@
 let isUpCaps = false;
 let isUpShift = false;
 
-export function shiftOn(e, keyboard, lang) {
+export function shiftOn(e, keyboard, languages) {
   const { code, keyCode } = e;
   e.preventDefault();
   if (keyCode === 16 || e.target.getAttribute('data') == 16) {
-      if (keyCode) {
+    if (keyCode) {
       keyboard
         .querySelector(`div[data-code="${code}"]`)
         .classList.add('shift--active');
@@ -15,13 +15,14 @@ export function shiftOn(e, keyboard, lang) {
         .querySelector(`div[data-code="${place}"]`)
         .classList.add('shift--active');
     }
-
     isUpShift = true;
   } else if (keyCode === 20 || e.target.getAttribute('data') == 20) {
     keyboard.querySelector(`div[data="20"]`).classList.add('caps--active');
     isUpCaps = true;
   }
+
   keyboard.querySelectorAll('.keyboard__item').forEach((el) => {
+    let lang = languages[localStorage.getItem('lang')];
     if (el.textContent.length == 1) {
       if (isUpCaps && isUpShift) {
         el.textContent = el.textContent.toLowerCase();
@@ -40,7 +41,7 @@ export function shiftOn(e, keyboard, lang) {
   });
 }
 
-export function shiftOff(e, keyboard, lang) {
+export function shiftOff(e, keyboard, languages) {
   const { code, keyCode } = e;
   e.preventDefault();
   if (keyCode === 16 || e.target.getAttribute('data') == 16) {
@@ -61,6 +62,7 @@ export function shiftOff(e, keyboard, lang) {
     isUpCaps = false;
   }
   keyboard.querySelectorAll('.keyboard__item').forEach((el) => {
+    let lang = languages[localStorage.getItem('lang')];
     if (el.textContent.length == 1) {
       if (isUpCaps && isUpShift) {
         el.textContent = el.textContent.toUpperCase();

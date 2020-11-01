@@ -1,7 +1,7 @@
 export default [
   { sign: '`', signOn: '~', num: 192, code: 'Backquote' },
   { sign: '1', signOn: '!', num: 49, code: 'Digit1' },
-  { sign: '2', signOn: '"', num: 50, code: 'Digit2' },
+  { sign: '2', signOn: '@', num: 50, code: 'Digit2' },
   { sign: '3', signOn: '#', num: 51, code: 'Digit3' },
   { sign: '4', signOn: '$', num: 52, code: 'Digit4' },
   { sign: '5', signOn: '%', num: 53, code: 'Digit5' },

@@ -15,25 +15,73 @@ import del from './options/del.js';
 import enter from './options/enter.js';
 import { shiftOn, shiftOff } from './options/shift.js';
 import { addArrowLeft, addArrowRight } from './options/addArrow.js';
-// import { changeLang, clearCache } from './options/changeLang.js';
+import addLangAnimation from './options/addLangAnimation.js';
+import addSoundAnimation from './options/addSoundAnimation.js';
+import addVoiceAnimation from './options/addVoiceAnimation.js';
+import changeLang from './options/changeLang.js';
+import { addPressSound, addClickSound } from './options/addClickSound.js';
+import recognizer from './options/addVoiceRecognition.js';
+import { showKeyboard, hideKeyboard } from './options/showKeyboard.js';
 
 // Create structure
 const keyboard = document.createElement('div'),
   keyboard__wrap = document.createElement('div'),
   myTextarea = document.createElement('textarea'),
   myList = document.createElement('ul'),
-  message = document.createElement('p');
+  optionBtn = document.createElement('div'),
+  changeLangBtn = document.createElement('div'),
+  enBtn = document.createElement('div'),
+  ruBtn = document.createElement('div'),
+  soundBtn = document.createElement('div'),
+  voiceBtn = document.createElement('div'),
+  hideBtn = document.createElement('div');
 
-keyboardStructure(keyboard, keyboard__wrap, myTextarea, myList, message);
+keyboardStructure(
+  keyboard,
+  keyboard__wrap,
+  myTextarea,
+  myList,
+  optionBtn,
+  changeLangBtn,
+  enBtn,
+  ruBtn,
+  soundBtn,
+  voiceBtn,
+  hideBtn
+);
 
 // Add buttons to the DOM structure
-localStorage.getItem('lang') || localStorage.setItem('lang', 'ru');
+localStorage.getItem('lang') || localStorage.setItem('lang', 'en');
+localStorage.getItem('lang') === 'en'
+  ? enBtn.classList.add('lang__item--active')
+  : ruBtn.classList.add('lang__item--active');
 let lang = languages[localStorage.getItem('lang')];
 
 initKeys(lang);
 
-let shift = false;
-let caps = false;
+// Add audio
+document.body.insertAdjacentHTML(
+  'afterbegin',
+  `<audio id='audioEn'>
+<source
+  src='./sound/en.mp3'
+  type='audio/mpeg'
+/>
+Your browser does not support the audio element.
+</audio>
+
+<audio id='audioRu'>
+<source
+  src='./sound/ru.mp3'
+  type='audio/mpeg'
+/>
+Your browser does not support the audio element.
+</audio>
+`
+);
+localStorage.setItem('sound', 'off');
+let shift = false,
+  caps = false;
 function handler(e) {
   if (e.keyCode === 18) e.preventDefault();
 
@@ -45,31 +93,22 @@ function handler(e) {
     inputFromKeyboard(e, keyboard, myTextarea);
     // Add Tab option
     tabBtn(e, myTextarea);
-
     // Add Shift option
     if (e.keyCode == 16) {
       shift = shift ? false : true;
-      shift ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+      shift
+        ? shiftOn(e, keyboard, languages)
+        : shiftOff(e, keyboard, languages);
     }
     if (e.keyCode == 20) {
       caps = caps ? false : true;
-      caps ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+      caps ? shiftOn(e, keyboard, languages) : shiftOff(e, keyboard, languages);
     }
-    // Add change language option
-    // changeLang(e, keyboard, lang, languages, initKeys, 'ShiftLeft', 'AltLeft');
-    // changeLang(
-    //   e,
-    //   keyboard,
-    //   languages,
-    //   initKeys,
-    //   'ShiftRight',
-    //   'AltRight'
-    // );
+    // Add Press sound
+    addPressSound();
   } else if (type.match(/keyup/)) {
     // Remove from animation from key
-    removeAnimationButtons(keyboard);
-    // Clear language cache
-    // clearCache(e);
+    removeAnimationButtons(keyboard, optionBtn);
   }
   myTextarea.focus();
 }
@@ -97,11 +136,13 @@ function mouseHandler(e) {
     // Add Shift option
     if (e.target.getAttribute('data') == 16) {
       shift = shift ? false : true;
-      shift ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+      shift
+        ? shiftOn(e, keyboard, languages)
+        : shiftOff(e, keyboard, languages);
     }
     if (e.target.getAttribute('data') == 20) {
       caps = caps ? false : true;
-      caps ? shiftOn(e, keyboard, lang) : shiftOff(e, keyboard, lang);
+      caps ? shiftOn(e, keyboard, languages) : shiftOff(e, keyboard, languages);
     }
     // Add arrow left option
     if (e.target.getAttribute('data') == 37) {
@@ -111,10 +152,28 @@ function mouseHandler(e) {
     if (e.target.getAttribute('data') == 39) {
       addArrowRight(myTextarea);
     }
+    // Add LangBtn Animation
+    addLangAnimation(e, enBtn, ruBtn);
+    // Add Sound Animation
+    addSoundAnimation(e, soundBtn);
+    // Add Voice Animation
+    addVoiceAnimation(e, voiceBtn);
+    // Add Change Lang option
+    changeLang(e, keyboard, languages, initKeys);
+    // Add Click sound
+    addClickSound(e);
+    // Add voice record
+    if (e.target.dataset.code === 'voice') {
+      recognizer();
+    }
+    // Show keyboard
+    showKeyboard(e);
+    // Hide keyboard
+    hideKeyboard(e);
   }
   if (type.match(/mouseup/)) {
     // Remove animation for mouse
-    removeAnimationButtons(keyboard);
+    removeAnimationButtons(keyboard, optionBtn);
   }
   myTextarea.focus();
 }
