@@ -22,6 +22,7 @@ import changeLang from './options/changeLang.js';
 import { addPressSound, addClickSound } from './options/addClickSound.js';
 import recognizer from './options/addVoiceRecognition.js';
 import { showKeyboard, hideKeyboard } from './options/showKeyboard.js';
+import { audio } from './audio.js';
 
 // Create structure
 const keyboard = document.createElement('div'),
@@ -60,25 +61,8 @@ let lang = languages[localStorage.getItem('lang')];
 initKeys(lang);
 
 // Add audio
-document.body.insertAdjacentHTML(
-  'afterbegin',
-  `<audio id='audioEn'>
-<source
-  src='./sound/en.mp3'
-  type='audio/mpeg'
-/>
-Your browser does not support the audio element.
-</audio>
+document.body.insertAdjacentHTML('afterbegin', audio);
 
-<audio id='audioRu'>
-<source
-  src='./sound/ru.mp3'
-  type='audio/mpeg'
-/>
-Your browser does not support the audio element.
-</audio>
-`
-);
 localStorage.setItem('sound', 'off');
 let shift = false,
   caps = false;
@@ -89,6 +73,8 @@ function handler(e) {
   if (type.match(/keydown/)) {
     // Add animation for key
     addAnimationButtons(e, keyboard);
+    // Add Press sound
+    addPressSound(e);
     // Add Input from keyboard option
     inputFromKeyboard(e, keyboard, myTextarea);
     // Add Tab option
@@ -104,8 +90,6 @@ function handler(e) {
       caps = caps ? false : true;
       caps ? shiftOn(e, keyboard, languages) : shiftOff(e, keyboard, languages);
     }
-    // Add Press sound
-    addPressSound();
   } else if (type.match(/keyup/)) {
     // Remove from animation from key
     removeAnimationButtons(keyboard, optionBtn);

@@ -158,6 +158,7 @@ web_modules/
 
 #Another
 /node_modules
+/src
 test.js
 build/
 .DS_Store
